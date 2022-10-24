@@ -41,6 +41,10 @@ public class Task {
 		
 	}
 
+	public Task(String title) {
+		this.title = title;
+	}
+
 	public long getId() {
 		return id;
 	}

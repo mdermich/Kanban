@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.tse.tdspring.dao.DeveloperRepository;
+import org.tse.tdspring.dao.TaskRepository;
 import org.tse.tdspring.dao.TaskStatusRepository;
 import org.tse.tdspring.domain.Developer;
+import org.tse.tdspring.domain.Task;
 import org.tse.tdspring.domain.TaskStatus;
 
 @Component
@@ -17,6 +19,8 @@ public class DatabaseRunner implements CommandLineRunner{
     private DeveloperRepository developerRepository;
 	@Autowired
 	private TaskStatusRepository taskStatusRepository;
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -30,6 +34,10 @@ public class DatabaseRunner implements CommandLineRunner{
 		taskStatusRepository.save(new TaskStatus(1L)); // DOING
 		taskStatusRepository.save(new TaskStatus(2L)); // TEST
 		taskStatusRepository.save(new TaskStatus(3L)); // DONE
+		
+		//Populate Task table
+		taskRepository.save(new Task("Tests"));
+		taskRepository.save(new Task("Designing architecture"));
 		
 	}
 

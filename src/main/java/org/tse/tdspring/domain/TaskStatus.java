@@ -1,10 +1,7 @@
 package org.tse.tdspring.domain;
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 public class TaskStatus {
@@ -13,15 +10,6 @@ public class TaskStatus {
 	private long id;
 	
 	private String label;
-	
-	@OneToMany(mappedBy="status")
-	private Set<Task> tasks;
-	
-	@OneToMany(mappedBy="sourceStatus")
-	private Set<ChangeLog> changeLogsSource;
-	
-	@OneToMany(mappedBy="targetStatus")
-	private Set<ChangeLog> changeLogsTarget;
 
 	public TaskStatus() {
 		
@@ -48,28 +36,23 @@ public class TaskStatus {
 		this.label = label;
 	}
 
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	public Set<ChangeLog> getChangeLogsSource() {
-		return changeLogsSource;
-	}
-
-	public void setChangeLogsSource(Set<ChangeLog> changeLogsSource) {
-		this.changeLogsSource = changeLogsSource;
-	}
-
-	public Set<ChangeLog> getChangeLogsTarget() {
-		return changeLogsTarget;
-	}
-
-	public void setChangeLogsTarget(Set<ChangeLog> changeLogsTarget) {
-		this.changeLogsTarget = changeLogsTarget;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TaskStatus other = (TaskStatus) obj;
+		if (id != other.id)
+			return false;
+		if (label == null) {
+			if (other.label != null)
+				return false;
+		} else if (!label.equals(other.label))
+			return false;
+		return true;
 	}
 
 }
