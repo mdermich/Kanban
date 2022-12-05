@@ -11,16 +11,16 @@ import javax.persistence.OneToMany;
 public class TaskType {
 	
 	@Id
-	@GeneratedValue
 	private long id;
 	
 	private String label;
-	
-	@OneToMany(mappedBy="type")
-	private Set<Task> tasks;
+
+	public TaskType(long id) {
+		this.id = id;
+	}
 
 	public TaskType() {
-		
+
 	}
 
 	public long getId() {
@@ -37,14 +37,6 @@ public class TaskType {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public Set<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(Set<Task> tasks) {
-		this.tasks = tasks;
 	}
 
 }

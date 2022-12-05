@@ -1,5 +1,7 @@
 package org.tse.tdspring.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -9,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Task {
@@ -16,21 +22,33 @@ public class Task {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
+	@NotNull(message = "Title can't be null")
+	@NotBlank(message = "Title can't be the empty string")
 	private String title;
-	
+
+	@NotNull(message = "Number of hours forecast can't be null")
+	@Min(value = 0, message = "Number of hours forecast can't be negative")
 	private int nbHoursForecast;
-	
+
+	@NotNull(message = "Number of hours real can't be null")
+	@Min(value = 0, message = "Number of hours real can't be negative")
 	private int nbHoursReal;
-	
+
+	@NotNull(message = "Date of creation real can't be null")
 	private LocalDate created;
-	
+
+	@NotNull(message = "Developers can't be null")
+	@NotEmpty(message = "A task must at least have one developer")
+	@JsonIgnoreProperties("tasks")
 	@ManyToMany
 	private Set<Developer> developers;
-	
+
+	@NotNull(message = "A task must have a type")
 	@ManyToOne
 	private TaskType type;
-	
+
+	@NotNull(message = "A task must have a status")
 	@ManyToOne
 	private TaskStatus status;
 	
@@ -43,6 +61,17 @@ public class Task {
 
 	public Task(String title) {
 		this.title = title;
+	}
+
+	public Task(String title, int nbHoursForecast, int nbHoursReal, LocalDate created, Set<Developer> developers, TaskType type, TaskStatus status) {
+		this.id = id;
+		this.title = title;
+		this.nbHoursForecast = nbHoursForecast;
+		this.nbHoursReal = nbHoursReal;
+		this.created = created;
+		this.developers = developers;
+		this.type = type;
+		this.status = status;
 	}
 
 	public long getId() {

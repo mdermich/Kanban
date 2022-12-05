@@ -1,13 +1,16 @@
 package org.tse.tdspring.service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tse.tdspring.dao.TaskRepository;
 import org.tse.tdspring.dao.TaskStatusRepository;
+import org.tse.tdspring.dao.TaskTypeRepository;
 import org.tse.tdspring.domain.Task;
 import org.tse.tdspring.domain.TaskStatus;
+import org.tse.tdspring.domain.TaskType;
 
 @Service
 public class TaskService {
@@ -16,6 +19,8 @@ public class TaskService {
 	TaskRepository taskRepo;
 	@Autowired
 	TaskStatusRepository taskStatusRepo;
+	@Autowired
+	TaskTypeRepository taskTypeRepo;
 	
 	public Collection<Task> findAllTasks(){
 		return taskRepo.findAll();
@@ -65,6 +70,21 @@ public class TaskService {
 			task.setStatus(this.taskStatusRepo.findById(2L).orElse(null));
 		}
 		return task;
+	}
+
+	public Task createTask(Task task) {
+		Task newTask = task;
+		newTask.setCreated(LocalDate.now());
+		newTask.setStatus(this.taskStatusRepo.findById(0L).orElse(null));
+		return this.taskRepo.save(newTask);
+	}
+
+	public TaskStatus getTaskStatus(long idStatus){
+		return this.taskStatusRepo.findById(idStatus).orElse(null);
+	}
+
+	public TaskType getTaskType(long idType){
+		return this.taskTypeRepo.findById(idType).orElse(null);
 	}
 
 }

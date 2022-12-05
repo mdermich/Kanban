@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Developer {
 
@@ -20,6 +22,8 @@ public class Developer {
 	
 	private String lastname;
 	
+	// To hide password from GET response
+	@JsonIgnore
 	private String password;
 	
 	private String email;

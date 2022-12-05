@@ -16,5 +16,9 @@ public class DeveloperService {
 	public List<Developer> findAllDevelopers(){
 		return devRepo.findAll();
 	}
+	
+	public Developer findDeveloperById(long id) {
+		return this.devRepo.findById(id).orElse(null);
+	}
 
 }
